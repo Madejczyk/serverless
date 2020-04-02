@@ -9,12 +9,10 @@ const groupsTable = process.env.GROUPS_TABLE
 exports.handler = async (event) => {
   console.log('Processing event: ', event)
   const itemId = uuid.v4()
-
-  const parsedBody = JSON.parse(event.body)
-
+  const eventBody = event.body != null ? JSON.parse(event.body) : event;
   const newItem = {
     id: itemId,
-    ...parsedBody
+    ...eventBody
   }
 
   await docClient.put({
